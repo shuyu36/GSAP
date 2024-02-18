@@ -20,30 +20,49 @@ class Car {
         repeat: car.repeat,
         repeatDelay: car.repeatDelay,
         paused: true,
-      });
+      })
 
       const audio = new Audio(`./src/sound/${car.sound_effect}`);
 
       const listener = this._addListener(dom, effect, audio);
-      this.data.push({ dom, effect, listener });
-    });
-  };
+      this.data.push({ dom, effect, listener })
+    })
+  }
+
+  _addListener = (dom, effect, audio) => {
+    let timer = null;
+    const click = dom.addEventListener("click", () => {
+      timer = setTimeout(() => {
+      effect.paused(!effect.paused())}, 200)
+    })
+
+    const dblclick = dom.addEventListener("dblclick", () => {
+      this._clearTimer(timer)
+      audio.play();
+    })
+
+    return { click, dblclick }
+  }
 
 
+  _clearTimer = (timer) =>{
+    timer&&clearTimeout(timer)
+  }
+  
   play = () => {
-    this.data.forEach((car) => {
+    this.data.forEach(car => {
       car.effect.play();
-    });
-  };
+    })
+  }
 
   paused = () => {
-    this.data.forEach((car) => {
+    this.data.forEach(car => {
       car.effect.paused();
-    });
-  };
+    })
+  }
 }
 
-const car = new Car();
+const car = new Car(car_info);
 
 // 外層可引入
 export { car };
