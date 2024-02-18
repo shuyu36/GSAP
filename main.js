@@ -1,6 +1,7 @@
 import "./style.css";
 import { gsap } from "gsap";
 import { navbar } from "./navbar";
+import {car} from "./car"
 
 window.onload = () => {
   navbar.adjuct();
@@ -38,7 +39,16 @@ function loadAnimation() {
     opacity: 0,
     x: 80,
   });
+
+  tween.call(carAnimation);
 }
+// 同時作用
+function carAnimation(){
+  car.play()
+}
+
+
+
 const navIcon = document.querySelector("header i");
 
 navIcon.addEventListener("click", () => {
@@ -60,11 +70,11 @@ navIcon.addEventListener("click", () => {
   );
 });
 
-const menuIcon = document.querySelector(".menu i")
+const menuIcon = document.querySelector(".menu i");
 
 menuIcon.addEventListener("click", () => {
   const tween = gsap.timeline();
-  tween.to(".menu", { duration: 0.3, y: 30 })
+  tween.to(".menu", { duration: 0.3, y: 30 });
   tween.to(".menu", {
     duration: 1,
     y: -window.innerHeight,
